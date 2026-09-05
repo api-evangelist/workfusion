@@ -1,0 +1,33 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  provider documentation search plus web search for a WorkFusion MCP server, 2026-09-04
+status: none
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+tools: []
+note: >-
+  No MCP server. WorkFusion publishes no hosted MCP endpoint, no stdio package on npm or
+  PyPI, and no agent-integration documentation of any kind — searched across
+  doc.workfusion.com (both the /platform and /enterprise documentation sites), the
+  WorkFusion GitHub organization (one public repository, a 2018 Go AMQP fork), npm and
+  PyPI. No candidate tool list is derived either: deriving one requires an OpenAPI to
+  bind tools to, and WorkFusion publishes none.
+  Worth recording explicitly for a company that sells "AI Agents" — the agents are
+  WorkFusion-operated workers a bank buys, not an agent surface a third-party agent can
+  call. The only programmatic entry point is starting a Business Process on a customer's
+  own Control Tower instance with that customer's user credentials.
+searched:
+- surface: https://doc.workfusion.com/platform/ (Work.AI documentation, 931 indexed pages)
+  result: no MCP, no agent-protocol, no tool-manifest page
+- surface: https://doc.workfusion.com/digital-workers/ (AI Agent guides)
+  result: no MCP endpoint published
+- surface: https://github.com/WorkFusion
+  result: 1 public repository, unrelated
+- surface: npm / PyPI
+  result: no @workfusion or workfusion MCP package

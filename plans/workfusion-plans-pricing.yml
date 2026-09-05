@@ -1,0 +1,34 @@
+generated: '2026-09-04'
+method: searched
+source: https://www.workfusion.com/
+plan_count: 0
+pricing_model: enterprise-sales
+public_pricing: false
+currency: null
+plans: []
+evidence:
+- url: https://www.workfusion.com/pricing/
+  status: 404
+- url: https://www.workfusion.com/plans/
+  status: 404
+- url: https://www.workfusion.com/request-demo/
+  status: 200
+  note: the only commercial call to action on the site is a demo request form
+note: >-
+  WorkFusion publishes no pricing of any kind — no tiers, no list price, no unit of
+  consumption, no free tier and no self-serve signup. The site's commercial path is
+  "Request a demo", and commercial terms live in a negotiated Order Form referenced by
+  the Cloud Services SLA and the Data Processing Agreement (the SLA defines a "Monthly
+  Fee" as 1/12th of a 12-month prepaid subscription, which is the only pricing SHAPE the
+  provider discloses publicly — never an amount). Recorded as plan_count 0 rather than
+  omitted: an enterprise contact-us posture is a real, deliberate finding about how this
+  API is bought.
+commercial_terms_published:
+- name: Cloud Services Service Level Agreement
+  url: https://doc.workfusion.com/platform/support/policies/cloud-services-service-level-agreement
+- name: Online Support Policy 3.0
+  url: https://doc.workfusion.com/platform/support/policies/workfusion-online-support-policy-3-0
+- name: Customer Data Processing Agreement
+  url: https://doc.workfusion.com/platform/support/policies/customer-data-processing-agreement
+- name: Acceptable Use Policy
+  url: https://www.workfusion.com/aup/

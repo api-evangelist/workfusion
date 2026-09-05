@@ -1,0 +1,65 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+docs: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+note: >-
+  Derived mechanically from OpenAPI is not possible — WorkFusion publishes no OpenAPI
+  document (see conformance/ and the repo README). Every scheme below is read from the
+  provider's own public documentation on doc.workfusion.com.
+summary:
+  types: [http, apiKey, mutualTLS, openIdConnect]
+  api_key_in: [cookie, header]
+  oauth2_flows: []
+  primary: form-login-session
+schemes:
+- name: FormLoginSession
+  type: apiKey
+  in: cookie
+  parameter: JSESSIONID
+  description: >-
+    Primary mechanism. POST /workfusion/api/dologin with Content-Type
+    application/x-www-form-urlencoded and the fields j_username and j_password (Control
+    Tower credentials). The response body is {"success":true,"csrfToken":...,
+    "csrfHeaderName":...} and the Set-Cookie response header carries JSESSIONID. Every
+    subsequent request sends the JSESSIONID cookie.
+  sources: [https://doc.workfusion.com/platform/docs/api/workfusion-rest-api]
+- name: CsrfToken
+  type: apiKey
+  in: header
+  parameter: X-CSRF-TOKEN
+  description: >-
+    CSRF protection is applied to the REST endpoints. The csrfToken value returned by
+    /dologin must be echoed on every subsequent call in the header named by
+    csrfHeaderName (X-CSRF-TOKEN in the provider's own samples).
+  sources: [https://doc.workfusion.com/platform/docs/api/workfusion-rest-api]
+- name: HttpBasic
+  type: http
+  scheme: basic
+  description: >-
+    The Packages API (/mturk-web/soap/api) is documented with `Authorization: Basic`
+    and curl --user user:password rather than the form-login session.
+  sources: [https://doc.workfusion.com/platform/docs/api/packages-api]
+- name: CertificateBasedAuthentication
+  type: mutualTLS
+  description: >-
+    Optional client-certificate authentication. A PKCS#12 client certificate is issued
+    per username and imported to the caller; Tomcat is configured with clientAuth=true
+    on an SSL connector and the JNDI variable rest/cert-auth/enable set to true. This is
+    a deployment-time option the customer enables, not a hosted default.
+  sources: [https://doc.workfusion.com/platform/docs/api/certificate-based-authentication]
+- name: KeycloakIdentityProvider
+  type: openIdConnect
+  description: >-
+    From IA Cloud 10.2 the platform federates identity through Keycloak (SAML/OIDC IdPs,
+    LDAP). REST callers authenticate with Keycloak credentials, but the provider documents
+    that a LOCAL password must be set in Keycloak for the user because an IdP-issued
+    password is never held by Keycloak — i.e. REST access still resolves to a
+    username/password login, not to a bearer token issued by the IdP. No token endpoint,
+    no scopes and no client-credentials flow are documented for the platform API.
+  sources:
+  - https://doc.workfusion.com/platform/docs/install/keycloak/keycloak-and-rest-api
+  - https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+gaps:
+- no bearer/API-key credential is issued for the REST API; callers use interactive user credentials
+- no OAuth 2.0 scopes are published, so scopes/ is intentionally absent from this repo
+- no documented token rotation, expiry or revocation policy for the JSESSIONID session

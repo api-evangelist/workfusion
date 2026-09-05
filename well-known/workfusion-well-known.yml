@@ -1,0 +1,175 @@
+generated: '2026-09-04'
+method: probed
+source: live GET probes, 2026-09-04
+hit_count: 0
+soft_404_control:
+  host: doc.workfusion.com
+  path: /.well-known/workfusion-negative-control-7f3ab91c.json
+  status: 200
+  bytes: 18899
+  verdict: failed
+  note: >-
+    doc.workfusion.com is a Docusaurus single-page catch-all: every path under it,
+    including a random path that cannot exist, returns HTTP 200 with the identical
+    18,899-byte HTML shell. Every 200 recorded for that host below is that shell, not a
+    document. No WellKnown or SecurityTxt pointer is emitted for this repo.
+path_echo_control: passed
+hosts:
+- host: https://www.workfusion.com
+  soft_404_control:
+    path: /.well-known/workfusion-negative-control-7f3ab91c.json
+    status: 404
+    verdict: passed
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /openapi.yaml
+    status: 404
+  - path: /swagger.json
+    status: 404
+  - path: /v1/openapi.json
+    status: 404
+  - path: /api-docs
+    status: 404
+  - path: /redoc
+    status: 404
+- host: https://workfusion.com
+  note: >-
+    Redirects to www.workfusion.com. Probing began returning HTTP 429 partway through
+    the sweep (edge rate limiting), so the www host above is the authoritative record
+    for this domain. No path returned a document before the throttle engaged.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /apis.json
+    status: 429
+  - path: /apis.yml
+    status: 429
+  - path: /.well-known/agent-card.json
+    status: 429
+  - path: /.well-known/aauth-resource.json
+    status: 429
+  - path: /llms.txt
+    status: 429
+- host: https://doc.workfusion.com
+  note: >-
+    CATCH-ALL. Every path returns 200 with the same SPA shell (see soft_404_control).
+    All statuses below are recorded for the audit trail and count as misses; no file was
+    saved and no pointer is emitted.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/api-catalog
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/apis.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /apis.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /apis.yml
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/agent.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /llms.txt
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /openapi.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /openapi.yaml
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /swagger.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /v1/openapi.json
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /api-docs
+    status: 200
+    verdict: soft-404 SPA shell
+  - path: /redoc
+    status: 200
+    verdict: soft-404 SPA shell
+hosts_not_probed:
+  note: >-
+    Every documented API base URL is templated on the customer's own instance host
+    (https://%HOSTNAME%/workfusion/api/, https://workspace.host/workspace/api/v1,
+    http://ocr.hostname:8080). There is no vendor-operated API host to probe, and
+    probing a customer tenant would be probing someone else's deployment.
+  hosts_that_do_not_resolve:
+  - api.workfusion.com
+  - developer.workfusion.com
+  - docs.workfusion.com
+  - status.workfusion.com
+  - community.workfusion.com
+  - trust.workfusion.com
+  - security.workfusion.com
+  finding: >-
+    docs.workfusion.com does not resolve, yet it is the hostname WorkFusion writes into
+    every <loc> in its own published sitemap at
+    https://doc.workfusion.com/platform/sitemap.xml — 931 canonical URLs pointing at a
+    host with no DNS record.

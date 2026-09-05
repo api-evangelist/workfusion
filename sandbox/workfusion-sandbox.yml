@@ -1,0 +1,54 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+public_sandbox: false
+self_serve_console: false
+test_credentials_published: false
+note: >-
+  WorkFusion publishes no developer sandbox, no hosted console, no test keys and no
+  magic test values — there is nothing an unauthenticated developer can call. What
+  exists is a customer-side test posture, recorded below because it is genuinely
+  documented and because the absence of a public sandbox is itself the finding. No
+  `Sandbox` pointer is emitted in apis.yml: a customer's own non-production tenant is
+  not a sandbox the catalog can credit the provider with offering.
+test_mode_signals:
+- name: sandbox flag on Business Process start
+  kind: request field
+  detail: >-
+    The provider's own Java sample for POST /api/v2/workfusion/task/file serialises a
+    TaskStart object with a `sandbox` boolean alongside campaignUuid, mainData and tags.
+    The docs show the field but do not describe its semantics, so no behaviour is
+    asserted here.
+  source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- name: non-production environments
+  kind: contractual
+  detail: >-
+    The Cloud Services SLA provides that "Upon Customer's request, WorkFusion will
+    provide to Customer non-production environments (development or testing and quality
+    assurance)", with availability service levels agreed separately in writing.
+  source: https://doc.workfusion.com/platform/support/policies/cloud-services-service-level-agreement
+- name: three-stage environment stack
+  kind: deployment convention
+  detail: >-
+    WorkFusion states that "most of enterprise customers use a three-stage environment
+    stack: dev, UAT, and production" — the reason given for removing the built-in
+    WorkSpace Sandbox in release 10.0.
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/10.0/iac-10-0-deprecations
+removed:
+- name: WorkSpace Sandbox
+  removed_in: '10.0'
+  note: the platform's own sandbox environment was removed as a product capability
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/10.0/iac-10-0-deprecations
+local_developer_surfaces:
+  note: >-
+    Two documented services run on the developer's own machine and ship their own Swagger
+    UI, which is the nearest thing to a try-it surface WorkFusion publishes — but both
+    require cloning a repository the docs do not link publicly and running the app first.
+  entries:
+  - name: Rule Builder REST API
+    swagger_ui: http://localhost:8186 (and http://localhost:5000/apidocs)
+    source: https://doc.workfusion.com/platform/docs/api/rule-builder-rest-api
+  - name: GenAI Rules REST API
+    swagger_ui: http://localhost:5000/apidocs
+    requires: an OpenAI key placed in /opt/workfusion/wf-sec-storage
+    source: https://doc.workfusion.com/platform/docs/api/genai-rest-api

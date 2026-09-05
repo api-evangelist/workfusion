@@ -1,0 +1,94 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  registry searches (npm, PyPI, Maven Central, RubyGems, crates.io, NuGet, pkg.go.dev)
+  plus the provider's own API reference on doc.workfusion.com, 2026-09-04
+summary:
+  official_client_sdks: 0
+  registry_published_packages: 0
+  first_party_libraries_documented: 2
+  note: >-
+    WorkFusion ships NO client SDK for its REST API in any public package registry, and
+    no `SDKs` pointer is emitted for this repo. The two first-party libraries below are
+    in-product automation libraries for writing bots and ML archetypes inside the
+    platform — they are distributed with the product installation, not from a registry,
+    and they are not client libraries a third party can install to call the WorkFusion
+    API. They are recorded here because their reference documentation is genuinely
+    public and versioned, which is real evidence about currency.
+registry_searches:
+- registry: npm
+  query: workfusion
+  result: 0 first-party packages (1 unrelated hit, abhinav-components)
+  url: https://registry.npmjs.org/-/v1/search?text=workfusion
+- registry: pypi
+  query: workfusion, work-ai
+  result: 404 on both
+- registry: maven-central
+  query: 'g:"com.workfusion" and free-text workfusion'
+  result: 0 artifacts, despite every documented Java package being under com.workfusion.*
+  url: https://search.maven.org/solrsearch/select?q=g%3A%22com.workfusion%22
+- registry: rubygems
+  result: not searched — no Ruby surface documented
+- registry: crates.io
+  result: not searched — no Rust surface documented
+- registry: nuget
+  result: not searched — no .NET surface documented
+- registry: pkg.go.dev
+  result: >-
+    not applicable as a distribution channel; the only public WorkFusion GitHub
+    repository is a Go AMQP 0.9.1 client fork (see repositories below)
+packages:
+- language: java
+  registry: none
+  name: com.workfusion.rpa.helpers (Simplified Robotics API)
+  official: true
+  version: 10.0.0.16
+  published: null
+  distribution: bundled with the WorkFusion / Work.AI product installation
+  reference: https://workfusion-docs.s3.amazonaws.com/rpa-simplified-api/latest/index.html
+  docs: https://doc.workfusion.com/platform/docs/api/simplified-robotics-api
+  install: null
+  note: >-
+    Version read from the Javadoc bundle's own title, "WorkFusion API 10.0.0.16", served
+    at the /latest/ path (HTTP 200, 2026-09-04). No publication date is exposed by the
+    bundle and there is no registry metadata endpoint to query, so `published` is null:
+    checked, nothing to record. The 10.0.0.16 stamp is itself the finding — the platform
+    it ships inside is at 10.3.2.5, so the published robotics API reference is three
+    minor releases behind the product.
+  packages_documented:
+  - com.workfusion.rpa.helpers
+  - com.workfusion.rpa.helpers.conditions
+  - com.workfusion.rpa.helpers.conditions.collection
+  - com.workfusion.rpa.helpers.selectors
+  - com.workfusion.rpa.helpers.utils
+  - com.workfusion.rpa.helpers.resources
+- language: java
+  registry: none
+  name: AutoML SDK (AutoML Models API)
+  official: true
+  version: 10.2.0.12
+  published: null
+  distribution: bundled with the WorkFusion / Work.AI product installation
+  reference: https://workfusion-docs.s3.amazonaws.com/vds/ml-sdk/latest/index.html
+  docs: https://doc.workfusion.com/platform/docs/api/automl-sdk-api
+  install: null
+  note: >-
+    Version read from the Javadoc bundle's own title, "AutoML: Models 10.2.0.12 API",
+    served at the /latest/ path (HTTP 200, 2026-09-04) and embedded as an iframe in the
+    provider's docs. No registry, therefore no publication date; `published: null` means
+    checked, not unchecked.
+repositories:
+- name: WorkFusion/amqp
+  url: https://github.com/WorkFusion/amqp
+  language: Go
+  description: Go client for AMQP 0.9.1
+  official: true
+  last_updated: '2018-07-06'
+  note: >-
+    The only public repository in the WorkFusion GitHub organization, and a fork of a
+    third-party AMQP client rather than a WorkFusion product library. Last updated 2018.
+    Recorded for completeness; it is not a client SDK for any WorkFusion API.
+gaps:
+- no client library exists for the WorkFusion REST API in any language
+- the documented Java packages are all under com.workfusion.* but none are on Maven Central
+- both published Javadoc bundles are pinned to versions older than the current product release

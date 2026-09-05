@@ -1,0 +1,153 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+docs:
+- https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- https://doc.workfusion.com/platform/docs/api/data-purge-api
+- https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+- https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+authentication:
+  style: form-login session + CSRF header
+  detail: >-
+    POST /workfusion/api/dologin returns a csrfToken and sets JSESSIONID; both are
+    replayed on every call. HTTP Basic on the Packages API; optional mutual TLS.
+  artifact: authentication/workfusion-authentication.yml
+base_url:
+  form: templated
+  pattern: https://%HOSTNAME%/workfusion/api/
+  note: >-
+    The provider states verbatim "All URLs begin with the following pattern:
+    https://%HOSTNAME%/workfusion/api/". There is no vendor-operated multi-tenant API
+    host — %HOSTNAME% is the customer's own Control Tower instance, so no single
+    resolvable base URL exists for this API and none is invented here.
+versioning:
+  scheme: uri-path
+  versions_in_use: [v1, v2]
+  detail: >-
+    Paths carry the version segment (/workfusion/api/v1/bp-instances,
+    /workfusion/api/v2/workfusion/task, /api/v2/cloud on OCR). The product itself is
+    versioned separately (10.3.2.x) and the docs site is version-switchable.
+  docs: https://doc.workfusion.com/platform/versions
+pagination:
+  style: page-number
+  params: [page, size, sort, sortDirection]
+  sort_values: [NAME, DESCRIPTION, ACTIVE, LAST_EXECUTION_POINT, NEXT_EXECUTION_POINT, CREATION_DATE]
+  sort_direction_values: [ASC, DESC]
+  response_fields: []
+  coverage: partial
+  note: >-
+    Documented on the Data Management API collection endpoints. Other documented
+    collections (Data Stores select, Packages runs) publish no pagination contract;
+    the Data Store select endpoint instead takes a required maxRows fetch limit.
+  docs: https://doc.workfusion.com/platform/docs/api/data-purge-api
+error_envelope:
+  format: vendor-envelope
+  shape:
+    responseStatus: SUCCESS | FAILURE
+    body: object | boolean | null
+    errors: '[{ code: <int>, message: <string> }]'
+  rfc9457: false
+  note: >-
+    No application/problem+json anywhere in the published documentation. The OCR service
+    answers in XML (<response><task … status="Completed"/></response>) rather than the
+    JSON envelope.
+  artifact: errors/workfusion-error-codes.yml
+async_operations:
+  present: true
+  detail: >-
+    Long-running work is modelled as a job with a UUID rather than a synchronous call.
+    Starting a Business Process returns a UUID; the caller polls
+    GET /api/v2/workfusion/task/{uuid}/steps for runStatus, and the provider recommends
+    a 3–5 minute poll interval. Asset Bundle import returns ACCEPTED and completes
+    asynchronously. OCR returns a task id then getTaskStatus.
+  polling_guidance: every 3-5 minutes, per the provider's own instruction
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  note: >-
+    No idempotency key, request-deduplication window, or replay-safe retry contract is
+    documented on any of the published endpoints. Repeating POST /api/v2/workfusion/task/file
+    starts another Business Process and returns a new UUID. The nearest adjacent
+    mechanisms are import conflict-resolution strategies (REPLACE, SKIP_DATASTORES,
+    CREATE_WITH_NEW_NAME, REPLACE_EXISTING, SKIP_IMPORT), which decide how a bundle
+    collides with existing assets — they are not request idempotency and are not treated
+    as such here.
+reversibility:
+  grade: documented
+  applies: true
+  note: >-
+    Reversal exists for process execution and for stored objects, but the provider states
+    no time window for any of it, so this grades `documented` rather than `verified`.
+    Windows below are recorded as null wherever the docs do not state one — none is inferred.
+  write_surfaces:
+  - surface: Business Process execution
+    reversal: pause / stop the running Business Process
+    operation: documented as BP lifecycle actions (create, start, pause, stop) on the
+      WorkFusion REST API; no operationId is published because no OpenAPI exists
+    window: null
+    docs: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+  - surface: Data Store rows
+    reversal: none — DELETE /{name}/delete and DELETE FROM via /execute are destructive
+    operation: null
+    window: null
+    docs: https://doc.workfusion.com/platform/docs/api/data-store-rest-api
+  - surface: Secrets Vault entries
+    reversal: none — delete is immediate; re-create by calling entry/put again
+    operation: null
+    window: null
+    docs: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+  - surface: Purged / archived process data
+    reversal: restore from archive
+    operation: data archival and restoration configurations in the Data Management API
+    window: null
+    docs: https://doc.workfusion.com/platform/docs/api/data-purge-api
+  - surface: Asset Bundle import
+    reversal: none documented — a REPLACE import overwrites the target asset; the
+      SKIP_DATASTORES strategy is a guard against loss, not an undo
+    operation: null
+    window: null
+    docs: https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run/preview/validate-only mode is documented. Asset Bundle import does
+    validate structure and checksum before starting, returning VALIDATION_FAILED, but
+    that is a precondition check inside a real import, not a rehearsal.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation header is published. Entity-level tracing is by UUID
+    (Business Process, run, campaign, package, assignment) and the platform ships event
+    logs and ELK for operators.
+  docs: https://doc.workfusion.com/platform/docs/orchestrate/set-up-bp/view-bp-event-logs
+rate_limit_signaling:
+  response_headers: []
+  status_on_exhaustion: null
+  note: >-
+    No API rate limit and no rate-limit response headers are published. The platform's
+    "Rate Limiter" is a no-code Business Process step that throttles records inside a
+    workflow — a design-time component, not a signal an API caller receives.
+  artifact: rate-limits/workfusion-rate-limits.yml
+metadata:
+  supported: true
+  note: >-
+    The Business Process start payload carries a free-form `tags` field alongside
+    campaignUuid and mainData.
+field_expansion:
+  supported: true
+  style: scope query parameter
+  detail: >-
+    POST /workfusion/api/v1/bp-instances/{uuid} accepts repeatable scope values —
+    STRUCTURE, BP_DETAILS, CHILDREN_DETAILS — to widen the returned representation.
+  docs: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+content_types:
+  request: [application/x-www-form-urlencoded, application/json, multipart/form-data]
+  response: [application/json, text/csv, application/xml]
+cross_links:
+  authentication: authentication/workfusion-authentication.yml
+  errors: errors/workfusion-error-codes.yml
+  lifecycle: lifecycle/workfusion-lifecycle.yml
+  rate_limits: rate-limits/workfusion-rate-limits.yml
+  conformance: conformance/workfusion-conformance.yml

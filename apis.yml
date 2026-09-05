@@ -1,23 +1,236 @@
 aid: workfusion
 name: WorkFusion
-description: 'WorkFusion is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'WorkFusion, Inc. is a New York headquartered enterprise AI company whose
+  Work.AI platform (formerly WorkFusion Intelligent Automation Cloud) ships pre-built
+  AI Agents — Evelyn, Evan, Tara, Edward, Isaac and Kayla — that review financial-crime
+  compliance alerts for banks and financial institutions: name and PEP sanctions screening,
+  payment sanctions screening, adverse media monitoring, enhanced due diligence, AML
+  transaction monitoring and KYC onboarding. The platform is delivered as customer-tenant
+  cloud services or self-hosted software, and its REST API family — Business Process
+  orchestration, Data Stores, Secrets Vault, Packages, Asset Bundle migration, Workspace,
+  OCR and Rules — is documented publicly at doc.workfusion.com but is served only from
+  a customer''s own Control Tower instance. No OpenAPI is published: the platform''s
+  Springfox Swagger UI is disabled by default and requires a login to the customer
+  instance.'
+image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
 url: https://raw.githubusercontent.com/api-evangelist/workfusion/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-09-04'
 modified: '2026-09-04'
 tags:
-- Company
-apis: []
+- AI Agents
+- Financial Crime Compliance
+- Anti-Money Laundering
+- Sanctions Screening
+- Know Your Customer
+- Transaction Monitoring
+- Adverse Media Monitoring
+- Intelligent Document Processing
+- Robotic Process Automation
+- Banking
+apis:
+- aid: workfusion:workfusion-rest-api
+  name: WorkFusion REST API
+  description: 'Launches, feeds and reads results from Business Processes (BPs) and
+    Manual Tasks on the Work.AI platform. Covers the BP lifecycle (draft, processing,
+    paused, completed) with create/start/pause/stop actions, BP instance detail and
+    snapshot retrieval, and CSV/XLSX result export. Authenticated by form login against
+    Control Tower (JSESSIONID cookie plus X-CSRF-TOKEN header). Served only from a
+    customer''s own Control Tower host.'
+  humanURL: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{hostname}/workfusion/api
+  tags:
+  - Business Process
+  - Orchestration
+  - Tasks
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+  - type: Authentication
+    url: authentication/workfusion-authentication.yml
+- aid: workfusion:data-store-rest-api
+  name: Data Store REST API
+  description: Remote management of Work.AI Data Stores over JSON. Exposes SQL select
+    and execute against ds_-prefixed stores, plus createOrUpdate, insert and delete
+    on a named Data Store.
+  humanURL: https://doc.workfusion.com/platform/docs/api/data-store-rest-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{hostname}/workfusion/api/v1/datastores
+  tags:
+  - Data Store
+  - SQL
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/data-store-rest-api
+- aid: workfusion:secrets-vault-api
+  name: Secrets Vault API
+  description: Credential management for automations. Retrieves, saves, updates and
+    deletes secure entries by alias; passwords are supplied Bcrypt-encoded at strength
+    10. Responses use the platform's responseStatus/body/errors envelope.
+  humanURL: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{hostname}/workfusion/api/v1/secrets-vault
+  tags:
+  - Secrets
+  - Credentials
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+- aid: workfusion:data-management-api
+  name: Data Management API
+  description: Manages database and S3 data purging plus data archival and restoration
+    configurations, including cron-scheduled runs and execution history. Paged and
+    sorted with page, size, sort and sortDirection query parameters.
+  humanURL: https://doc.workfusion.com/platform/docs/api/data-purge-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{control-tower-host}/api/v1
+  tags:
+  - Data Management
+  - Retention
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/data-purge-api
+- aid: workfusion:packages-api
+  name: Packages API
+  description: Migrates Business Processes across Control Tower instances by packaging
+    runs and Data Stores, with CREATE_WITH_NEW_NAME, REPLACE_EXISTING and SKIP_IMPORT
+    conflict resolution. Uses HTTP Basic authentication.
+  humanURL: https://doc.workfusion.com/platform/docs/api/packages-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{hostname}/mturk-web/soap/api
+  tags:
+  - Migration
+  - Packages
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/packages-api
+- aid: workfusion:asset-bundle-migration-api
+  name: AI Agent Asset Bundle Migration API
+  description: Imports and exports AI Agent Asset Bundles and Variation Asset Bundles
+    between Control Tower instances, with REPLACE and SKIP_DATASTORES conflict strategies,
+    md5 checksum validation and asynchronous import status (ACCEPTED, UPLOAD_FAILED,
+    VALIDATION_FAILED, FAILED).
+  humanURL: https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{hostname}/workfusion/api/v1
+  tags:
+  - Migration
+  - Asset Bundle
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+- aid: workfusion:workspace-shared-api
+  name: Workspace Shared API
+  description: Access to shared Workspace resources — assignments, draft and submitted
+    answers, users, user groups and Workspace metadata. Assignment states are READY_TO_PROCESS,
+    IN_PROGRESS, COMPLETED, EXPIRED, INACTIVE and DELETED.
+  humanURL: https://doc.workfusion.com/platform/docs/api/workspace-shared-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: https://{workspace-host}/workspace/api/v1
+  tags:
+  - Workspace
+  - Human In The Loop
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/workspace-shared-api
+- aid: workfusion:ocr-rest-api
+  name: OCR REST API
+  description: Document recognition service used by Intelligent Document Processing.
+    submitImage/processImage accept a file and OCR parameters, getTaskStatus polls
+    by task id, and download returns the converted result. Responses are XML. The
+    GET processDocument form is deprecated in favour of POST.
+  humanURL: https://doc.workfusion.com/platform/docs/api/ocr-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: http://{ocr-host}:8080/api/v2/cloud
+  tags:
+  - OCR
+  - Document Processing
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/ocr-api
+- aid: workfusion:rules-api
+  name: Rule Builder and GenAI Rules REST API
+  description: Decisioning services the customer runs alongside the platform. POST
+    /decisionRules evaluates a data object against a decision-rules configuration and
+    returns the rules fired plus the decision; POST /generateRulesWithSchema turns a
+    natural-language prompt into a decision-rule JSON using a configured OpenAI key.
+    Both ship their own Swagger UI on the local port.
+  humanURL: https://doc.workfusion.com/platform/docs/api/rule-builder-rest-api
+  image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
+  baseURL: http://{rules-host}:5000
+  tags:
+  - Rules
+  - Decisioning
+  - GenAI
+  properties:
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/rule-builder-rest-api
+  - type: Documentation
+    url: https://doc.workfusion.com/platform/docs/api/genai-rest-api
+common:
+- type: Website
+  url: https://www.workfusion.com/
+- type: Documentation
+  url: https://doc.workfusion.com/platform/
+- type: APIReference
+  url: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- type: Support
+  url: https://www.workfusion.com/customer-support/
+- type: Blog
+  url: https://www.workfusion.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/WorkFusion
+- type: PrivacyPolicy
+  url: https://www.workfusion.com/privacy-policy/
+- type: TermsOfService
+  name: Acceptable Use Policy
+  url: https://www.workfusion.com/aup/
+- type: Compliance
+  name: Customer Data Processing Agreement
+  url: https://doc.workfusion.com/platform/support/policies/customer-data-processing-agreement
+- type: ChangeLog
+  url: https://doc.workfusion.com/platform/releases/release-notes
+- type: ChangeLog
+  name: Release notes catalog
+  url: changelog/workfusion-changelog.yml
+- type: Deprecation
+  url: https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations
+- type: Lifecycle
+  url: lifecycle/workfusion-lifecycle.yml
+- type: Authentication
+  url: authentication/workfusion-authentication.yml
+- type: Conventions
+  url: conventions/workfusion-conventions.yml
+- type: ErrorCatalog
+  url: errors/workfusion-error-codes.yml
+- type: Conformance
+  url: conformance/workfusion-conformance.yml
+- type: DomainSecurity
+  url: security/workfusion-domain-security.yml
+- type: Packages
+  url: packages/workfusion-packages.yml
+- type: LLMsTxt
+  url: llms/workfusion-llms.txt
+- type: Plans
+  url: plans/workfusion-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/workfusion-rate-limits.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/workfusion
+- type: X
+  url: https://twitter.com/workfusion
+- type: YouTube
+  url: https://www.youtube.com/channel/UC5tOI66hnD7AbRR9A0AvHGg
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
-common:
-- type: Website
-  url: https://forgeglobal.com/workfusion_stock/
+x-enrichment:
+  date: '2026-09-04'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v3

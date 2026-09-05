@@ -1,0 +1,96 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/releases/release-notes
+versioning:
+  scheme: uri-path
+  api_versions: [v1, v2]
+  product_current: 10.3.2.5
+  product_supported_lines: ['10.3.2', '10.3.1', '10.3', '10.2.9', '10.2.8']
+  docs: https://doc.workfusion.com/platform/versions
+  note: >-
+    The documentation site is version-switchable across 10.3.2 down to 10.2.3, so older
+    supported releases keep their own published API reference.
+deprecation:
+  policy_url: https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations
+  practice: per-release deprecation and removal notes
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    WorkFusion publishes named "Deprecations" pages per major release rather than a
+    standing deprecation policy document, and it does state removal intent in advance —
+    e.g. "GET processDocument request deprecated in OCR API and will be removed in the
+    next major release. Use POST processDocument request method instead." No RFC 8594
+    Sunset/Deprecation response headers are documented.
+  pages:
+  - version: '10.1'
+    url: https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations
+  - version: '10.0'
+    url: https://doc.workfusion.com/enterprise/docs/iac/releases/10.0/iac-10-0-deprecations
+deprecated_operations:
+- operation: GET processDocument
+  api: workfusion:ocr-rest-api
+  replacement: POST processDocument
+  removal: next major release
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations
+removed_capabilities:
+- capability: WorkSpace Sandbox environment
+  removed_in: '10.0'
+  rationale: >-
+    "most of enterprise customers use a three-stage environment stack: dev, UAT, and
+    production"
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/10.0/iac-10-0-deprecations
+- capability: Export XML action on the Manual Tasks list
+  removed_in: '10.1'
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations
+- capability: google-places-scanner and google-api-client plugins
+  removed_in: '10.0'
+  source: https://doc.workfusion.com/enterprise/docs/iac/releases/10.0/iac-10-0-deprecations
+sla:
+  url: https://doc.workfusion.com/platform/support/policies/cloud-services-service-level-agreement
+  uptime_target: 99.5%
+  scope: production Cloud Services, 24 hours per day, 365 days per year, excluding Scheduled Downtime
+  last_updated: '2022-06-06'
+  service_credits:
+  - condition: one month with a Service Level Default
+    credit: 5% of the Monthly Fee
+  - condition: a second or third Service Level Default within any three continuous months
+    credit: 10% of the Monthly Fee
+  termination_right: >-
+    four consecutive months of Service Level Default lets the customer terminate the
+    Order Form and recover a pro-rata refund of unused pre-paid fees
+  change_notice: at least 60 days' advance notice for adverse changes to the SLA
+  maintenance_window: >-
+    scheduled routine maintenance is not performed between 7:00 AM and 6:00 PM ET;
+    non-routine maintenance may occur on discovery of a security vulnerability
+support:
+  policy_url: https://doc.workfusion.com/platform/support/policies/workfusion-online-support-policy-3-0
+  last_updated: '2025-08-11'
+  portal: https://jira.workfusion.com/servicedesk/customer/portals
+  coverage: 24x7x365 for Blocker/Critical; customer business hours for Major/Minor
+  response_targets:
+  - priority: 1 - Blocker
+    weekday: 15 minutes
+    weekend: 1 hour
+  - priority: 2 - Critical
+    weekday: 1 hour
+    weekend: 4 hours
+  - priority: 3 - Major
+    weekday: 4 hours
+    weekend: excluded
+  - priority: 4 - Minor
+    weekday: 24 hours
+    weekend: excluded
+status_page: null
+status_page_note: >-
+  No status page found. workfusion.statuspage.io returns HTTP 200 but redirects to
+  atlassian.com/software/statuspage — an unclaimed-subdomain marketing page, not a
+  WorkFusion status page; it is recorded here as a miss so a later run does not
+  mistake the 200 for a hit. status.workfusion.com and status.work.ai do not resolve.
+security_advisories:
+  url: https://doc.workfusion.com/platform/releases/security-advisories
+  last_updated: '2021-12-22'
+  note: >-
+    A single standing advisory page, still dated to the log4j remediation of December
+    2021. It is remediation guidance for self-hosted operators rather than a running
+    advisory feed, and no CVE list or subscription is published.
+changelog: changelog/workfusion-changelog.yml

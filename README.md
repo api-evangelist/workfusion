@@ -64,5 +64,21 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-WorkFusion is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/workfusion_stock/
+WorkFusion, Inc. sells pre-built AI Agents for financial crime compliance — Evelyn (name and
+PEP sanctions screening), Evan (adverse media monitoring), Tara (payment sanctions screening),
+Edward (enhanced due diligence), Isaac (AML transaction monitoring and fraud alert review) and
+Kayla (KYC) — running on the Work.AI platform, formerly WorkFusion Intelligent Automation Cloud.
+
+## What this profile found
+
+WorkFusion documents a real, substantial REST API family in public — Business Process
+orchestration, Data Stores, Secrets Vault, Packages, Asset Bundle migration, Workspace, OCR and
+Rules — but publishes **no machine-readable contract for any of it**. The platform generates
+Springfox Swagger, and the provider states it is disabled by default and requires a login to the
+customer's own instance once enabled. There is likewise no vendor-operated API host: every
+documented base URL is templated on the customer's Control Tower deployment
+(`https://%HOSTNAME%/workfusion/api/`).
+
+- Documentation: <https://doc.workfusion.com/platform/>
+- API reference: <https://doc.workfusion.com/platform/docs/api/workfusion-rest-api>
+- Company: <https://www.workfusion.com/>

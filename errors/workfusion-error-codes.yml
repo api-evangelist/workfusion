@@ -1,0 +1,81 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+format: vendor-envelope
+rfc9457: false
+note: >-
+  WorkFusion publishes no OpenAPI, so this catalog is NOT derived from 4xx/5xx responses
+  in a spec — every entry below is read from a worked example or a documented status
+  enumeration in the provider's own public documentation. The published surface is thin:
+  there is no consolidated error reference page, and the only numeric error codes the
+  docs ever show are the two Secrets Vault examples.
+envelope:
+  fields:
+    responseStatus: SUCCESS or FAILURE
+    body: the payload on success, null on failure
+    errors: array of { code, message }
+  example_failure: |
+    {
+      "responseStatus": "FAILURE",
+      "body": null,
+      "errors": [ { "code": 22, "message": "Invalid password" } ]
+    }
+  docs: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+codes:
+- code: 20
+  message: Secure Entry <alias> already exists
+  surface: Secrets Vault API
+  meaning: conflict — an entry with that alias is already stored
+  action: use entry/update instead of entry/put, or choose another alias
+  source: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+- code: 22
+  message: Invalid password
+  surface: Secrets Vault API
+  meaning: the supplied credential did not authenticate the vault operation
+  action: re-check the Bcrypt(10) encoded password value
+  source: https://doc.workfusion.com/platform/docs/api/secrets-vault-api
+status_enumerations:
+- name: Asset Bundle import status
+  surface: AI Agent Asset Bundle Migration API
+  values:
+  - value: ACCEPTED
+    meaning: import started successfully
+  - value: UPLOAD_FAILED
+    meaning: the bundle could not be uploaded to the temporary folder
+  - value: VALIDATION_FAILED
+    meaning: incorrect md5 checksum or invalid bundle structure
+  - value: FAILED
+    meaning: errors occurred during import
+  source: https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+- name: Business Process run status
+  surface: WorkFusion REST API
+  values:
+  - value: COMPLETED
+    meaning: the step finished; the BP is done when the final step reports COMPLETED
+  - value: 'null'
+    meaning: >-
+      the provider documents a null runStatus as the failure signal — "the Business
+      Process failed with an error, and additional investigation is needed". A null
+      field, not a status code, is how a failed run is reported to an API caller.
+  source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- name: Workspace assignment status
+  surface: Workspace Shared API
+  values:
+  - value: READY_TO_PROCESS
+  - value: IN_PROGRESS
+  - value: COMPLETED
+  - value: EXPIRED
+  - value: INACTIVE
+  - value: DELETED
+  source: https://doc.workfusion.com/platform/docs/api/workspace-shared-api
+- name: OCR task message
+  surface: OCR REST API
+  values:
+  - value: OK
+    meaning: recognition succeeded; results are available at resultUrl/resultUrl2/resultUrl3
+  source: https://doc.workfusion.com/platform/docs/api/ocr-api
+gaps:
+- no consolidated error-code reference page is published
+- no HTTP status-code table is published for any endpoint
+- no machine-readable problem type URIs; errors are numeric codes inside a vendor envelope
+- failure of a Business Process is signalled by a null field rather than an error response

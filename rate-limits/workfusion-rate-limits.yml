@@ -1,0 +1,43 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+limit_count: 0
+rate_limits: []
+response_headers: []
+status_on_exhaustion: null
+retry_after: false
+note: >-
+  No API rate limit is published on any WorkFusion endpoint, and no rate-limit response
+  header (X-RateLimit-*, RateLimit-*, Retry-After) appears anywhere in the documentation.
+  This is consistent with the deployment model — the API is served from the customer's
+  own Control Tower instance, so throughput is bounded by that customer's cluster rather
+  than by a vendor quota. An honest zero, not a gap in the search.
+adjacent_mechanisms:
+- name: Rate Limiter (no-code Business Process step)
+  kind: design-time workflow throttle, NOT an API rate limit
+  description: >-
+    A bot step that caps the number of records passing through it within a configured
+    time interval (default 100 records), used to stop two AI Agents in one environment
+    from competing for BEP Workers. It throttles work inside a process; an API caller
+    receives no signal from it.
+  url: https://doc.workfusion.com/platform/docs/orchestrate/set-up-bp/rate-limiter
+- name: Business Process status polling guidance
+  kind: client-side pacing recommendation
+  description: >-
+    The provider recommends polling GET /api/v2/workfusion/task/{uuid}/steps "every 3-5
+    minutes based on the expected execution duration" — the closest thing published to a
+    call-rate expectation.
+  url: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- name: Asset Bundle upload ceiling
+  kind: payload size limit
+  description: 'POST /bundle-import: "The acceptable size is up to 3 GB."'
+  url: https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api
+- name: Data Store select row cap
+  kind: required per-request result cap
+  description: GET /api/v1/datastores/select requires a maxRows fetch-row-count limit
+  url: https://doc.workfusion.com/platform/docs/api/data-store-rest-api
+observed:
+  note: >-
+    www.workfusion.com's own edge began returning HTTP 429 during the well-known sweep on
+    2026-09-04. That is a marketing-site bot control, not an API rate limit, and it is
+    recorded in well-known/workfusion-well-known.yml rather than counted here.

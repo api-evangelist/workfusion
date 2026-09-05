@@ -1,0 +1,89 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/releases/release-notes
+docs: https://doc.workfusion.com/platform/releases/release-notes
+scheme: four-part product version (major.minor.patch.build), not semver
+current_version: 10.3.2.5
+current_release_date: '2026-08-28'
+cadence: >-
+  Two maintenance lines are carried in parallel — 10.3.2.x and 10.2.9.x — each receiving
+  dated patch releases; 40 dated entries are published from 10.2.8 (November 2023)
+  forward, with older releases collected on a "10.2.7.x and earlier" page.
+scope: >-
+  These are PRODUCT release notes for the self-hosted / customer-tenant Work.AI platform,
+  not an API changelog. API changes surface inside them (see the OCR processDocument
+  deprecation carried on the Deprecations pages) but there is no separate, API-scoped
+  change feed and no RSS/Atom feed for releases.
+feed: null
+entries:
+- version: 10.3.2.5
+  date: '2026-08-28'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-5-release-notes
+  breaking: false
+  highlights:
+  - Security and stability release; third-party components updated
+  - NGINX 1.30.4, Apache Tomcat 10.1.57, RabbitMQ 4.3.4, Handlebars.js 4.7.9, ELK for RPA 9.4.4, OpenBao 2.4.4.6-wf-build
+  - Fixed sign-in/session initialization on Windows 11 Unified deployments
+  - Fixed RPA Vault connectivity and Edge Portable WebDriver retrieval
+  - Fixed queue cleanup for signal-based Business Processes
+  - Workspace performance under heavy load improved
+- version: 10.3.2.2.3
+  date: '2026-09-01'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-2-3-release-notes
+- version: 10.2.9.12
+  date: '2026-08-19'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-12-release-notes
+- version: 10.3.2.2.2
+  date: '2026-06-29'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-2-2-release-notes
+- version: 10.3.2.2.1
+  date: '2026-06-04'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-2-1-release-notes
+- version: 10.3.2.4
+  date: '2026-05-04'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-4-release-notes
+- version: 10.3.2.3
+  date: '2026-04-14'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-3-release-notes
+- version: 10.3.2.2
+  date: '2026-03-25'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-2-release-notes
+- version: 10.2.9.11
+  date: '2026-03-03'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-11-release-notes
+- version: 10.2.9.8.1
+  date: '2026-02-25'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-8-1-release-notes
+- version: 10.3.2.1
+  date: '2026-02-20'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-1-release-notes
+- version: 10.3.2
+  date: '2026-02-17'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-2-release-notes
+- version: 10.3.1.1
+  date: '2026-01-30'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-1-1-release-notes
+- version: 10.2.9.6.4
+  date: '2025-12-18'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-6-4-release-notes
+- version: 10.2.9.10
+  date: '2025-12-17'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-10-release-notes
+- version: 10.3.1
+  date: '2025-12-16'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-1-release-notes
+- version: 10.2.9.6.3
+  date: '2025-11-28'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-6-3-release-notes
+- version: 10.2.9.9
+  date: '2025-10-17'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-9-release-notes
+- version: '10.3'
+  date: '2025-10-02'
+  url: https://doc.workfusion.com/platform/releases/iac-10-3-release-notes
+- version: 10.2.9.4.1
+  date: '2025-09-22'
+  url: https://doc.workfusion.com/platform/releases/iac-10-2-9-4-1-release-notes
+window_note: >-
+  Recent window only (most recent 20 dated entries as published on 2026-09-04). The live
+  index at the source URL is the full and authoritative list.

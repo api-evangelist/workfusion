@@ -1,0 +1,120 @@
+generated: '2026-09-04'
+method: searched
+source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+note: >-
+  Assessed from the provider's public documentation only. WorkFusion publishes no
+  OpenAPI, AsyncAPI or JSON Schema, so nothing here is derived from a machine-readable
+  contract; every `conforms: true` cites a page WorkFusion itself publishes.
+standards:
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document is published anywhere. The platform generates Springfox
+    Swagger for its Spring REST layer, but the provider states access "is disabled by
+    default" for security reasons, is enabled per-instance via
+    swagger.apidocs.enabled=true in tomcat's workfusion.properties, and "requires a
+    standard login to the WorkFusion platform" at
+    https://your-instance.workfusion.com/workfusion/api/swagger-ui.html.
+  source: https://doc.workfusion.com/platform/docs/api/swagger-configuration
+- id: asyncapi
+  conforms: false
+  evidence: no event or streaming contract is published; BP-to-BP signalling is internal to the platform
+- id: graphql
+  conforms: false
+  evidence: no GraphQL surface documented
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    errors use a vendor envelope { responseStatus, body, errors[{code,message}] };
+    application/problem+json appears nowhere in the documentation
+- id: oauth2
+  conforms: false
+  evidence: >-
+    no OAuth 2.0 authorization or token endpoint, no scopes, no client credentials are
+    documented for the platform API; REST callers use form login with user credentials
+- id: oidc
+  conforms: true
+  partial: true
+  evidence: >-
+    The platform federates end-user identity through Keycloak, supporting OIDC and SAML
+    identity providers and LDAP. This applies to interactive sign-in; the REST API still
+    resolves to a local Keycloak password rather than an IdP-issued token.
+  source: https://doc.workfusion.com/platform/docs/install/keycloak/identity-providers
+- id: mutual-tls
+  conforms: true
+  evidence: >-
+    Certificate-based authentication is documented end to end — PKCS#12 client
+    certificate per user, Tomcat SSL connector with clientAuth=true, JNDI
+    rest/cert-auth/enable, and the matching Spring Security configuration.
+  source: https://doc.workfusion.com/platform/docs/api/certificate-based-authentication
+- id: csrf-protection
+  conforms: true
+  evidence: >-
+    "CSRF protection is added to REST endpoints" — a csrfToken and csrfHeaderName are
+    returned by /dologin and must be replayed on every call.
+  source: https://doc.workfusion.com/platform/docs/api/workfusion-rest-api
+- id: pagination
+  conforms: true
+  partial: true
+  evidence: page/size/sort/sortDirection on the Data Management API collections
+  source: https://doc.workfusion.com/platform/docs/api/data-purge-api
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key or replay-safe retry contract is documented on any endpoint
+- id: gdpr
+  conforms: true
+  evidence: >-
+    WorkFusion publishes a Customer Data Processing Agreement naming GDPR, the UK data
+    protection regime, CCPA/CPRA, the Virginia CDPA and the Colorado Privacy Act, and
+    incorporating Module Two (controller-to-processor) Standard Contractual Clauses plus
+    the UK IDTA addendum. WorkFusion acts as Processor; the customer is Controller.
+  source: https://doc.workfusion.com/platform/support/policies/customer-data-processing-agreement
+- id: soc-service-organization
+  conforms: true
+  evidence: >-
+    WorkFusion displays an A-LIGN SOC for Service Organizations badge on its homepage,
+    linked to aicpa.org/soc4so. The report type (SOC 1 / SOC 2, Type I / Type II) and the
+    audit period are NOT stated publicly; the DPA says security certifications and audit
+    reports are provided "upon Customer's written request" and are Confidential
+    Information. Recorded as a published claim, not as a verified SOC 2 Type II.
+  source: https://www.workfusion.com/
+- id: iso-27001
+  conforms: false
+  evidence: no ISO 27001 certification is claimed on any public WorkFusion page found in this pass
+- id: security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on www.workfusion.com (probed 2026-09-04)
+domain_standards:
+  assessed: true
+  market: financial crime compliance / AML for banking
+  regime: financial-services
+  findings:
+  - id: bsa-ofac
+    declared_in_contract: false
+    evidence: >-
+      WorkFusion's marketing and solution pages reference BSA/OFAC obligations, and its
+      AI Agents are built around sanctions, PEP, adverse-media and transaction-monitoring
+      alert review. This is a regulatory context the product serves, not a message format
+      or schema the API declares.
+  - id: iso-20022
+    declared_in_contract: false
+    evidence: >-
+      No ISO 20022 message type, pain/pacs/camt element, or payment-message schema
+      appears in any published endpoint, payload example or field list. Payment sanctions
+      screening (Tara) consumes the customer's own payment messages inside a Business
+      Process; the API surface transports CSV/XLSX and opaque Data Store rows.
+  - id: fapi
+    declared_in_contract: false
+    evidence: no FAPI security profile is claimed; the API is session/CSRF based
+  conclusion: >-
+    No domain standard is declared by a WorkFusion contract. This is a reward-only
+    dimension and the absence is recorded, not scored against the provider: WorkFusion
+    sells an alert-review workforce that runs inside a bank's existing screening stack,
+    and its published integration surface is deliberately format-agnostic (Excel/CSV over
+    S3, HTTP or FTP; Data Store rows; opaque Business Process payloads).
+third_party_screening_sources:
+  note: >-
+    The Media Check documentation names the external data providers a screening Business
+    Process calls — Refinitiv WorldCheck One, LexisNexis AML Insight and Google News.
+    Recorded as an integration fact; no contract for them is published by WorkFusion.
+  source: https://doc.workfusion.com/platform/docs/api/media-check-api

@@ -1,0 +1,84 @@
+# WorkFusion
+
+> WorkFusion, Inc. sells pre-built AI Agents for financial crime compliance — Evelyn (name
+> and PEP sanctions screening), Evan (adverse media monitoring), Tara (payment sanctions
+> screening), Edward (enhanced due diligence), Isaac (AML transaction monitoring and fraud
+> alert review) and Kayla (KYC) — running on the Work.AI platform, formerly WorkFusion
+> Intelligent Automation Cloud. The platform is delivered as customer-tenant cloud services
+> or self-hosted software for banks and financial institutions.
+
+## What an agent needs to know first
+
+- There is NO vendor-operated API host. Every documented endpoint is served from the
+  customer's own Control Tower instance: `https://%HOSTNAME%/workfusion/api/`. You cannot
+  call WorkFusion; you call your own WorkFusion deployment.
+- There is NO published OpenAPI. The platform generates Springfox Swagger, but it is
+  disabled by default (`swagger.apidocs.enabled=true` in tomcat's `workfusion.properties`)
+  and, once enabled, requires a login to that instance.
+- Authentication is a form login, not a token. `POST /workfusion/api/dologin` with
+  `j_username` / `j_password` returns `{"success":true,"csrfToken":…,"csrfHeaderName":…}`
+  and sets a `JSESSIONID` cookie. Replay both the cookie and the CSRF header on every call.
+- There is no idempotency key, no rate-limit header, no webhook catalog, no MCP server and
+  no A2A agent card. Long work is a job: start it, get a UUID, poll every 3-5 minutes.
+- This file is written by API Evangelist from WorkFusion's public documentation. WorkFusion
+  does not publish an llms.txt of its own (https://www.workfusion.com/llms.txt → 404).
+
+## APIs
+
+- [WorkFusion REST API](https://doc.workfusion.com/platform/docs/api/workfusion-rest-api): Business Process and Manual Task lifecycle — start, pause, stop, poll steps, pull CSV/XLSX snapshots. Base `https://{hostname}/workfusion/api`.
+- [Data Store REST API](https://doc.workfusion.com/platform/docs/api/data-store-rest-api): SQL select/execute plus createOrUpdate, insert and delete against `ds_`-prefixed Data Stores.
+- [Secrets Vault API](https://doc.workfusion.com/platform/docs/api/secrets-vault-api): get, put, update and delete secure entries by alias; passwords Bcrypt(10) encoded.
+- [Data Management API](https://doc.workfusion.com/platform/docs/api/data-purge-api): database and S3 purge, archival and restoration configurations, cron-scheduled, paged with page/size/sort/sortDirection.
+- [Packages API](https://doc.workfusion.com/platform/docs/api/packages-api): migrate Business Processes between Control Tower instances. HTTP Basic.
+- [AI Agent Asset Bundle Migration API](https://doc.workfusion.com/platform/docs/api/asset-bundle-migration-api): import/export Asset Bundles with REPLACE or SKIP_DATASTORES conflict strategies and md5 validation.
+- [Workspace Shared API](https://doc.workfusion.com/platform/docs/api/workspace-shared-api): assignments, draft and submitted answers, users, user groups, Workspace metadata.
+- [OCR REST API](https://doc.workfusion.com/platform/docs/api/ocr-api): submitImage/processImage, getTaskStatus, download. XML responses. GET processDocument is deprecated in favour of POST.
+- [Rule Builder REST API](https://doc.workfusion.com/platform/docs/api/rule-builder-rest-api): `POST /decisionRules` evaluates data against a decision-rules configuration.
+- [GenAI Rules REST API](https://doc.workfusion.com/platform/docs/api/genai-rest-api): `POST /generateRulesWithSchema` turns a prompt into decision-rule JSON.
+- [AutoML SDK API](https://doc.workfusion.com/platform/docs/api/automl-sdk-api): Java library for AutoML Archetypes ([Javadoc](https://workfusion-docs.s3.amazonaws.com/vds/ml-sdk/latest/index.html), 10.2.0.12).
+- [Simplified Robotics API](https://doc.workfusion.com/platform/docs/api/simplified-robotics-api): Java bot-scripting library ([Javadoc](https://workfusion-docs.s3.amazonaws.com/rpa-simplified-api/latest/index.html), 10.0.0.16).
+
+## Auth and security
+
+- [API security / form-based authentication](https://doc.workfusion.com/platform/docs/api/workfusion-rest-api)
+- [Certificate-based authentication (mutual TLS)](https://doc.workfusion.com/platform/docs/api/certificate-based-authentication)
+- [REST API authentication with an enabled IdP (Keycloak)](https://doc.workfusion.com/platform/docs/install/keycloak/keycloak-and-rest-api)
+- [Swagger configuration — how the API reference is enabled per instance](https://doc.workfusion.com/platform/docs/api/swagger-configuration)
+- [Security advisories](https://doc.workfusion.com/platform/releases/security-advisories)
+
+## Operations
+
+- [Release notes](https://doc.workfusion.com/platform/releases/release-notes) — current 10.3.2.5, 28 August 2026
+- [Deprecations, release 10.1](https://doc.workfusion.com/enterprise/docs/iac/releases/iac-10-1-deprecations)
+- [Cloud Services SLA](https://doc.workfusion.com/platform/support/policies/cloud-services-service-level-agreement) — 99.5% production availability, service credits
+- [Online Support Policy 3.0](https://doc.workfusion.com/platform/support/policies/workfusion-online-support-policy-3-0) — 15-minute Blocker response, 24x7x365
+- [Customer Data Processing Agreement](https://doc.workfusion.com/platform/support/policies/customer-data-processing-agreement) — GDPR, UK IDTA, CCPA/CPRA, CDPA, CPA, SCC Module Two
+- No status page. `workfusion.statuspage.io` is an unclaimed subdomain that redirects to Atlassian marketing.
+
+## Docs and site
+
+- [Work.AI documentation](https://doc.workfusion.com/platform/)
+- [AI Agent documentation](https://doc.workfusion.com/digital-workers/)
+- [Legacy IA Cloud Enterprise documentation](https://doc.workfusion.com/enterprise/)
+- [Automation Academy](https://automationacademy.com/)
+- [Company site](https://www.workfusion.com/)
+- [Blog — Eye on FinCrime Compliance](https://www.workfusion.com/blog/)
+- [Customer support](https://www.workfusion.com/customer-support/)
+- [Privacy Policy](https://www.workfusion.com/privacy-policy/)
+- [Acceptable Use Policy](https://www.workfusion.com/aup/)
+
+## API Evangelist artifacts in this repository
+
+- authentication/workfusion-authentication.yml
+- conventions/workfusion-conventions.yml
+- errors/workfusion-error-codes.yml
+- lifecycle/workfusion-lifecycle.yml
+- changelog/workfusion-changelog.yml
+- conformance/workfusion-conformance.yml
+- packages/workfusion-packages.yml
+- plans/workfusion-plans-pricing.yml
+- rate-limits/workfusion-rate-limits.yml
+- sandbox/workfusion-sandbox.yml
+- security/workfusion-domain-security.yml
+- well-known/workfusion-well-known.yml
+- mcp/workfusion-mcp.yml
