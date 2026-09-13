@@ -5,10 +5,17 @@
       "source": "https://www.workfusion.com/customer-support/",
       "feed_url": "https://www.workfusion.com/feed/",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "discovered"
+    },
+    {
+      "source": "https://www.workfusion.com/feed/",
+      "feed_url": "https://www.workfusion.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-09-06T19:17:18Z"
+  "post_count": 9,
+  "fetched": "2026-09-13T13:00:00Z"
 }
