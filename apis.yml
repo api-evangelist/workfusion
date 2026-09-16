@@ -45,6 +45,10 @@ apis:
   tags:
   - Business Process
   - Orchestration
+  - Task
+  tags_raw:
+  - Business Process
+  - Orchestration
   - Tasks
   properties:
   - type: Documentation
@@ -60,6 +64,9 @@ apis:
   image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
   baseURL: https://{hostname}/workfusion/api/v1/datastores
   tags:
+  - Datastore
+  - SQL
+  tags_raw:
   - Data Store
   - SQL
   properties:
@@ -131,6 +138,9 @@ apis:
   image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
   baseURL: https://{workspace-host}/workspace/api/v1
   tags:
+  - Workspace
+  - Human-in-the-Loop
+  tags_raw:
   - Workspace
   - Human In The Loop
   properties:
