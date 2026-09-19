@@ -24,6 +24,17 @@ tags:
 - Financial Crime Compliance
 - Anti-Money Laundering
 - Sanctions Screening
+- KYC
+- Transaction Monitoring
+- Adverse Media Monitoring
+- Intelligent Document Processing
+- Robotic Process Automation
+- Banking
+tags_raw:
+- AI Agents
+- Financial Crime Compliance
+- Anti-Money Laundering
+- Sanctions Screening
 - Know Your Customer
 - Transaction Monitoring
 - Adverse Media Monitoring
@@ -172,6 +183,10 @@ apis:
   image: https://www.workfusion.com/wp-content/uploads/2023/01/favicon.png
   baseURL: http://{rules-host}:5000
   tags:
+  - Rules
+  - Decisioning
+  - Generative AI
+  tags_raw:
   - Rules
   - Decisioning
   - GenAI
