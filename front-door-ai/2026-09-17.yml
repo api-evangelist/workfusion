@@ -1,0 +1,29 @@
+# Front Door AI Index — workfusion — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: workfusion
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.workfusion.com
+  final_host: www.workfusion.com
+  ownership: own
+  owner: workfusion
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 84
+  host_score: 84
+  density: 43.86
+  words: 1915
+  tiers:
+    agentic: 36
+    core: 48
+    model: 0
+  ambiguous: 40
+  top_terms:
+    AI: 45
+    AI agent: 36
+    agent: 36
+    automation: 4
+    gen ai: 3
