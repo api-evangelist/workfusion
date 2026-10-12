@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/workfusion/integrations
+- https://n8n.io/integrations/workfusion/
+- https://composio.dev/toolkits/workfusion
+- https://monid.ai/tools/workfusion
+checked:
+- https://composio.dev/toolkits/workfusion
+- https://monid.ai/tools/workfusion
+- https://n8n.io/integrations/workfusion/
+- https://zapier.com/apps/workfusion/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
