@@ -1,16 +1,55 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/workfusion/integrations
 - https://n8n.io/integrations/workfusion/
 - https://composio.dev/toolkits/workfusion
 - https://monid.ai/tools/workfusion
 checked:
+- https://aws.amazon.com/marketplace/
+- https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/workfusion
 - https://monid.ai/tools/workfusion
 - https://n8n.io/integrations/workfusion/
 - https://zapier.com/apps/workfusion/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=96d229d2-c8e4-4888-9157-920a980e578a
+  listing_count: 4
+  apps:
+  - Evelyn - Name Sanction & Adverse Media Screening Digital Worker - SaaS
+  - Evelyn - Name Sanction & Adverse Media Screening Digital Worker - MS
+  - 'WorkFusion. Tara: Payment Sanction Screening Alert Review - MS'
+  - 'WorkFusion. Tara: Payment Sanction Screening Alert Review - SaaS'
+  seller_name: WorkFusion
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Workfusion%20Inc.
+  listing_count: 14
+  apps:
+  - Workfusion - AI Agent Evan - Adverse Media Monitoring (Full History)- Single Tenant
+  - Workfusion - AI Agent Evan - AMM (Ongoing) - SaaS
+  - Workfusion - AI Agent Evan - AMM (Ongoing) - Single Tenant
+  - Workfusion - AI Agent Evan - Adverse Media Monitoring (Full History) - SaaS
+  - Workfusion - AI Agent Kendrick - Customer Identity Program - SaaS
+  seller_name: Workfusion Inc.
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 templates: []
