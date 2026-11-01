@@ -64,21 +64,113 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-WorkFusion, Inc. sells pre-built AI Agents for financial crime compliance — Evelyn (name and
-PEP sanctions screening), Evan (adverse media monitoring), Tara (payment sanctions screening),
-Edward (enhanced due diligence), Isaac (AML transaction monitoring and fraud alert review) and
-Kayla (KYC) — running on the Work.AI platform, formerly WorkFusion Intelligent Automation Cloud.
+WorkFusion, Inc. is a New York headquartered enterprise AI company whose Work.AI platform (formerly WorkFusion Intelligent Automation Cloud) ships pre-built AI Agents — Evelyn, Evan, Tara, Edward, Isaac and Kayla — that review financial-crime compliance alerts for banks and financial institutions: name and PEP sanctions screening, payment sanctions screening, adverse media monitoring, enhanced due diligence, AML transaction monitoring and KYC onboarding. The platform is delivered as customer-tenant cloud services or self-hosted software, and its REST API family — Business Process orchestration, Data Stores, Secrets Vault, Packages, Asset Bundle migration, Workspace, OCR and Rules — is documented publicly at doc.workfusion.com but is served only from a customer's own Control Tower instance. No OpenAPI is published: the platform's Springfox Swagger UI is disabled by default and requires a login to the customer instance.
 
-## What this profile found
+**Areas:** AI Agents · Financial Crime Compliance · AML · Sanctions Screening · KYC · Transaction Monitoring · Adverse Media Monitoring · Intelligent Document Processing · RPA · Banking
 
-WorkFusion documents a real, substantial REST API family in public — Business Process
-orchestration, Data Stores, Secrets Vault, Packages, Asset Bundle migration, Workspace, OCR and
-Rules — but publishes **no machine-readable contract for any of it**. The platform generates
-Springfox Swagger, and the provider states it is disabled by default and requires a login to the
-customer's own instance once enabled. There is likewise no vendor-operated API host: every
-documented base URL is templated on the customer's Control Tower deployment
-(`https://%HOSTNAME%/workfusion/api/`).
+## WorkFusion on APIs.io
 
-- Documentation: <https://doc.workfusion.com/platform/>
-- API reference: <https://doc.workfusion.com/platform/docs/api/workfusion-rest-api>
-- Company: <https://www.workfusion.com/>
+Everything profiled for WorkFusion is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/workfusion/](https://apis.io/providers/workfusion/)** — or go straight to one of the APIs or properties below.
+
+### APIs (9)
+
+- [WorkFusion REST API](https://apis.io/apis/workfusion/workfusion-rest-api/) — Launches, feeds and reads results from Business Processes (BPs) and Manual Tasks on the Work.AI platform. Covers the BP lifecycle (draft, processing,…
+- [Data Store REST API](https://apis.io/apis/workfusion/data-store-rest-api/) — Remote management of Work.AI Data Stores over JSON. Exposes SQL select and execute against ds_-prefixed stores, plus createOrUpdate, insert and delete on a…
+- [Secrets Vault API](https://apis.io/apis/workfusion/secrets-vault-api/) — Credential management for automations. Retrieves, saves, updates and deletes secure entries by alias; passwords are supplied Bcrypt-encoded at strength 10.…
+- [Data Management API](https://apis.io/apis/workfusion/data-management-api/) — Manages database and S3 data purging plus data archival and restoration configurations, including cron-scheduled runs and execution history. Paged and…
+- [Packages API](https://apis.io/apis/workfusion/packages-api/) — Migrates Business Processes across Control Tower instances by packaging runs and Data Stores, with CREATE_WITH_NEW_NAME, REPLACE_EXISTING and SKIP_IMPORT…
+- [AI Agent Asset Bundle Migration API](https://apis.io/apis/workfusion/asset-bundle-migration-api/) — Imports and exports AI Agent Asset Bundles and Variation Asset Bundles between Control Tower instances, with REPLACE and SKIP_DATASTORES conflict…
+- [Workspace Shared API](https://apis.io/apis/workfusion/workspace-shared-api/) — Access to shared Workspace resources — assignments, draft and submitted answers, users, user groups and Workspace metadata. Assignment states are…
+- [OCR REST API](https://apis.io/apis/workfusion/ocr-rest-api/) — Document recognition service used by Intelligent Document Processing. submitImage/processImage accept a file and OCR parameters, getTaskStatus polls by task…
+- [Rule Builder and GenAI Rules REST API](https://apis.io/apis/workfusion/rules-api/) — Decisioning services the customer runs alongside the platform. POST /decisionRules evaluates a data object against a decision-rules configuration and…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Workfusion Authentication](https://apis.io/security/workfusion/workfusion-authentication/)
+- [Workfusion Domain Security](https://apis.io/security/workfusion/workfusion-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Workfusion Plans Pricing](https://apis.io/plans/workfusion/workfusion-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Workfusion Rate Limits](https://apis.io/rate-limits/workfusion/workfusion-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.workfusion.com/)
+- [Documentation](https://doc.workfusion.com/platform/)
+- [API reference](https://doc.workfusion.com/platform/docs/api/workfusion-rest-api)
+- [Support](https://www.workfusion.com/customer-support/)
+- [Changelog](https://doc.workfusion.com/platform/releases/release-notes)
+- [Blog](https://www.workfusion.com/blog/)
+- [Compliance](https://doc.workfusion.com/platform/support/policies/customer-data-processing-agreement)
+- [Terms of service](https://www.workfusion.com/aup/)
+- [Privacy policy](https://www.workfusion.com/privacy-policy/)
+- [GitHub](https://github.com/WorkFusion)
+
+## API Evangelist rating
+
+**Kin Score 27.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 28.9 |
+
+**Agent readiness 10.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 28.3** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/workfusion/](https://apis.io/providers/workfusion/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for WorkFusion: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/workfusion/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
